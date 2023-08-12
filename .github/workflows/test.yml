@@ -41,4 +41,4 @@ jobs:
       - name: Run the automated tests (for example)
         run: |
           poetry shell
-          poetry run pytest -v
+          pytest
