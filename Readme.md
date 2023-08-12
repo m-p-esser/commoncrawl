@@ -23,9 +23,6 @@
 ├── deployments      --> Prefect deployment .yaml files
 ├── docs
 │   └── images
-├── images           --> Collection of Docker images
-│   ├── prefect-agent
-│   └── prefect-worker
 ├── infrastructure   --> Terraform infra configs and scripts
 │   ├── compute
 │   └── storage
@@ -39,10 +36,14 @@
 │   ├── commoncrawl
 │   └── prefect
 ├── tests            --> Unit tests
-└── workflows        --> Github actions (CI)
+└── workflows        --> Github actions (e.g. CI)
 ```
 
 ## Setup
+
+### Activate Pre-commit 
+pre-commit install
+
 
 ### Environment Setup
 *necessary everytime you start working on the project*
