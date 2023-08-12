@@ -5,9 +5,13 @@ name: Test
 
 on:
   push:
-    branches: [ "test" ]
+    branches:
+      - develop
+      - test
   pull_request:
-    branches: [ "test" ]
+    branches:
+      - develop
+      - test
 
 permissions:
   contents: read
