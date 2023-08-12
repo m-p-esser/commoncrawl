@@ -40,5 +40,4 @@ jobs:
         run: poetry install
       - name: Run the automated tests (for example)
         run: |
-          poetry shell
           pytest
