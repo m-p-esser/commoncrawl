@@ -4,7 +4,6 @@
 - A Google account (to create ressources in GCP)
 - A Prefect account (with access to the Prefect Cloud)
 - A Free Neo4J Aura instance (can be easily setup on [Neo4j site](https://console.neo4j.io/))
-- VS Code with Devcontainer installed 
 - Expects the following Git branches. See [Git Branching Strategy](https://github.com/m-p-esser/common_crawl/blob/master/docs/images/Data_Engineering_Git_Branching_Strategy.png):
   - master
   - develop
@@ -80,8 +79,6 @@ Create Repository in Google Artifact Registry where you can deploy Docker images
 4. `terraform apply` to setup infrastructure as defined in `main.tf` files
 
 ### Deploy Flow
-1. Build and push the docker image -> `make deploy-prefect-worker-image`
-2. The deploy as Google Cloud Run Job -> `make deploy-gcr-flow`
 
 ## About the Common Crawl Project
 
