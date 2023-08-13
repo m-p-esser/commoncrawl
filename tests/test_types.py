@@ -1,53 +1,40 @@
+from urllib.parse import ParseResult
+
 import src.commoncrawl.types as cc_types
 
 
-def test_number_links():
+def test_url_parsed_sucessfully():
+    link = "https://test.org"
+    l = cc_types.Link(link)
+    assert isinstance(l._url, ParseResult)
+    assert len(l._url) > 0
+
+
+def test_hostname_parsed_sucessfully():
+    link = "https://test.org"
+    l = cc_types.Link(link)
+    assert isinstance(l.hostname, str)
+    assert l.hostname == "test.org"
+
+
+def test_protocol_parsed_sucessfully():
+    link = "https://test.org"
+    l = cc_types.Link(link)
+    assert isinstance(l.protocol, str)
+    assert l.protocol == "https"
+
+
+def test_path_parsed_sucessfully():
+    link = "https://test.org/random-path"
+    l = cc_types.Link(link)
+    assert isinstance(l.path, str)
+    assert l.path == "/random-path"
+
+
+def test_count_number_links():
     lc = cc_types.LinkCollection(
         warc_target_uri="dummy_uri",
         warc_record_id="dummy_id",
         links=["https://example.com", "https://test.org"],
     )
-    assert lc.number_links() == 2
-
-
-def test_parse_urls():
-    lc = cc_types.LinkCollection(
-        warc_target_uri="dummy_uri",
-        warc_record_id="dummy_id",
-        links=["https://example.com/path", "https://test.org"],
-    )
-    parsed_urls = lc.parse_urls()
-    assert len(parsed_urls) == 2
-    assert parsed_urls[0].netloc == "example.com"
-    assert parsed_urls[0].path == "/path"
-    assert parsed_urls[1].netloc == "test.org"
-
-
-def test_extract_hostnames():
-    lc = cc_types.LinkCollection(
-        warc_target_uri="dummy_uri",
-        warc_record_id="dummy_id",
-        links=["https://example.com", "https://test.org"],
-    )
-    lc.extract_hostnames()
-    assert lc.hostnames == ["example.com", "test.org"]
-
-
-def test_extract_protocols():
-    lc = cc_types.LinkCollection(
-        warc_target_uri="dummy_uri",
-        warc_record_id="dummy_id",
-        links=["https://example.com", "http://test.org"],
-    )
-    lc.extract_protocols()
-    assert lc.protocols == ["https", "http"]
-
-
-def test_extract_path_from_url():
-    lc = cc_types.LinkCollection(
-        warc_target_uri="dummy_uri",
-        warc_record_id="dummy_id",
-        links=["https://example.com/path1", "https://test.org/path2"],
-    )
-    lc.extract_path_from_url()
-    assert lc.paths == ["/path1", "/path2"]
+    assert lc.count_number_links() == 2
