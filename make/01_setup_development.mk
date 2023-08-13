@@ -36,10 +36,6 @@ env-init: ## Initialize environment, required everytime before the development p
 			;; \
 	esac;
 
-.PHONY: python-init
-python-init: ## Install python package to import custom modules
-	pip install -e .
-
 .PHONY: dev-init
 dev-init: ## Setup environment, so it can be used for dev, test or prod environment
 	@echo "Activating Poetry Shell"
