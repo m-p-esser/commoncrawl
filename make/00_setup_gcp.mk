@@ -45,8 +45,7 @@ enable-gcp-services: ## Enable GCP services
 		run.googleapis.com \
 		appenginereporting.googleapis.com \
 		compute.googleapis.com \
-		cloudresourcemanager.googleapis.com \
-		prod.n4gcp.neo4j.io
+		cloudresourcemanager.googleapis.com
 
 .PHONY: bind-iam-policies-to-deployment-service-account
 bind-iam-policies-to-deployment-service-account: ## Bind IAM Policies to Service Account
