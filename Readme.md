@@ -43,19 +43,15 @@
 ### Activate Pre-commit 
 pre-commit install
 
-
 ### Environment Setup
 *necessary everytime you start working on the project*
-1. `make env-init` to setup environment
-2. `make dev-init` to setup development environment
-3. Start Docker Daemon
-4. Rebuild and reopen in container
+1. `make dev-init` to setup development environment
 
 ### GCP Setup
 1. Define values in base.env (not part of this repository)
 2. Run `make setup-gcp` to setup up the Google Cloud Project
 
-If this doesn't work, run the commands from `01_00_setup_gcp.mk` command by command in the following order:
+If this doesn't work, run the commands from `00_00_setup_gcp.mk` command by command in the following order:
 - `make create-gcp-project`
 - `make set-default-gcp-project`
 - `make link-project-to-billing-account`
@@ -63,6 +59,7 @@ If this doesn't work, run the commands from `01_00_setup_gcp.mk` command by comm
 - `make create-deployment-service-account-key-file`
 - `make enable-gcp-services`
 - `make bind-iam-policies-to-deployment-service-account`
+- `make set-deployment-service-account-as-default`
 
 ### Prefect Setup
 As mentioned above, this project requires a Prefect account and access to the Prefect ckoud
