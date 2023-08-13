@@ -3,11 +3,7 @@ name = "commoncrawl"
 version = "0.1.0"
 description = ""
 authors = ["Marc-Philipp Esser <m-esser@mail.de>"]
-readme = "README.md"
-packages = [
-    { include = "tests" },
-    { include = "src" }
-    ]
+readme = "Readme.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -25,9 +21,12 @@ prefect-gcp = {extras = ["cloud-storage"], version = "^0.4.5"}
 black = "^23.7.0"
 pre-commit = "^3.3.3"
 pytest = "^7.4.0"
-flake8 = "^6.1.0"
 isort = "^5.12.0"
 interrogate = "^1.5.0"
+autoflake = "^2.2.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
 
 [build-system]
 requires = ["poetry-core"]

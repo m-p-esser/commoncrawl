@@ -1,18 +1,43 @@
+# It is possible to use hooks from the pre-commit python library directly 
+# See https://betterprogramming.pub/build-a-pre-commit-workflow-to-check-and-fix-your-python-code-automatically-313deb5a5701
+
 repos:
--   repo: https://github.com/ambv/black
-    rev: 23.7.0
-    hooks:
-    - id: black
--   repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
-    hooks:
-    - id: flake8
--   repo: https://github.com/timothycrosley/isort
-    rev: 5.12.0
-    hooks:
-    -   id: isort
--   repo: https://github.com/econchick/interrogate
-    rev: 1.5.0  
-    hooks:
-    - id: interrogate
-      args: [-vv, -i, --fail-under=80]
+- repo: https://github.com/ambv/black
+  rev: 23.7.0
+  hooks:
+  - id: black
+    name: Black Python code formatting
+
+- repo: https://github.com/PyCQA/autoflake
+  rev: v2.2.0
+  hooks:
+  - id: autoflake
+    name: Remove unused variables and imports
+    language: python
+    args:
+      [
+        "--in-place",
+        "--remove-all-unused-imports",
+        "--remove-unused-variables",
+        "--expand-star-imports",
+        "--ignore-init-module-imports",
+      ]
+    files: \.py$
+
+- repo: https://github.com/PyCQA/isort
+  rev: 5.12.0
+  hooks:
+  - id: isort
+    name: Sorting import statements
+
+- repo: https://github.com/econchick/interrogate
+  rev: 1.5.0  
+  hooks:
+  - id: interrogate
+    exclude: >-
+      (?x)(
+        ^tests/|            # Exclude tests directory
+        .*__init__\.py$     # Exclude __init__.py files
+      )
+    args: [-vv, -i, --fail-under=80]
+    name: Check if functions/classes have docstrings
