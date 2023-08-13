@@ -18,15 +18,23 @@ permissions:
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"] # Can check other versions as well
+        poetry-version: ["1.5.1"] # Can check other versions as well
+        os: [ubuntu-latest] # Add [window-latest, macos-latest] later
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - name: Install Python
         uses: actions/setup-python@v4
-        # see details (matrix, python-version, python-version-file, etc.)
-        # https://github.com/actions/setup-python
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Install poetry
         uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
       - name: Setup a local virtual environment (if no poetry.toml file)
         run: |
           poetry config virtualenvs.create true --local
@@ -36,6 +44,10 @@ jobs:
         with:
           path: ./.venv
           key: venv-${{ hashFiles('poetry.lock') }}
+      - name: Debug Poetry
+        run: | 
+          poetry debug info
+          poetry check -vv
       - name: Install the project dependencies
         run: poetry install
       - name: Run the automated tests (for example)
