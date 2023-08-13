@@ -1,40 +1,38 @@
 """ Common Crawl Data types """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from urllib.parse import ParseResult, urlparse
 
 
-@dataclass
+@dataclass(slots=True)
+class Link:
+    """Class to store Link data"""
+
+    link: str
+    _url: ParseResult = field(init=False, repr=False)
+    hostname: str = field(init=False, default_factory=str)
+    protocol: str = field(init=False, default_factory=str)
+    path: str = field(init=False, default_factory=str)
+
+    def __post_init__(self) -> ParseResult:
+        """Extract different URL components"""
+        self._url = urlparse(self.link)
+        self.hostname = self._url.netloc
+        self.protocol = self._url.scheme
+        self.path = self._url.path
+
+
+@dataclass(kw_only=True, slots=True)
 class LinkCollection:
     """Generic Class for collecting links from a single WAT file"""
 
     warc_target_uri: str
     warc_record_id: str
-    links: list[str]
-    hostnames: list[ParseResult.hostname] = None
-    protocols: list[ParseResult.scheme] = None
-    paths: list[ParseResult.path] = None
+    links: list[Link] = field(default_factory=list)
 
-    def number_links(self) -> int:
+    def count_number_links(self) -> int:
         """Count Number of Links"""
         return len(self.links)
-
-    def parse_urls(self) -> list[ParseResult]:
-        """Convert Links to URLs"""
-        urls = [urlparse(link) for link in self.links]
-        return urls
-
-    def extract_hostnames(self) -> list[ParseResult.netloc]:
-        """Extract hostnames from URLs"""
-        self.hostnames = [url.netloc for url in self.parse_urls()]
-
-    def extract_protocols(self) -> list[ParseResult.hostname]:
-        """Extract Web Protocols from URLs"""
-        self.protocols = [url.scheme for url in self.parse_urls()]
-
-    def extract_path_from_url(self) -> list[ParseResult.path]:
-        """Extract Paths (following hostnames) from URLs"""
-        self.paths = [url.path for url in self.parse_urls()]
 
 
 @dataclass
