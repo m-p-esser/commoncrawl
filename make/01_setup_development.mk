@@ -50,5 +50,3 @@ dev-init: ## Setup environment, so it can be used for dev, test or prod environm
 	prefect cloud login
 	@echo "Set environment variable (dev, test or production)"
 	"$(MAKE)" env-init
-# @echo "Install python package"
-# "$(MAKE)" python-init
