@@ -44,10 +44,10 @@ jobs:
         with:
           path: ./.venv
           key: venv-${{ hashFiles('poetry.lock') }}
-      - name: Debug Poetry
-        run: | 
-          poetry debug info
-          poetry check -vv
+      # - name: Debug Poetry
+      #   run: | 
+      #     poetry debug info
+      #     poetry check -vv
       - name: Install the project dependencies
         run: poetry install
       - name: Run the automated tests (for example)
