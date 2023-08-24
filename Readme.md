@@ -93,8 +93,9 @@ Probably not compatible with Data Proc
 https://medium.com/globalwork-data-driven-world/data-orchestration-using-prefect-and-pyspark-7321559864f7
 
 ### Infrastructure Setup (Data Proc)
-Export pyproject.toml as requirements.txt in 02_setup_infra.mk
-Create a Docker image with all dependencies and install requirements.txt (which will be used by Data Proc)
+- Export pyproject.toml as requirements.txt in 02_setup_infra.mk
+- Create a Docker image with all dependencies and install requirements.txt (which will be used by Data Proc)
+- Deploy Data Proc Cluster using Make target
 
 ### Pipeline (Please stick to it)
 
