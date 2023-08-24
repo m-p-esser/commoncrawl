@@ -1,5 +1,15 @@
 # Commoncrawl Analysis
 
+## About the Common Crawl Project
+
+Important File Types
+- WAT
+- WART
+- WET
+
+### WAT Files
+https://gist.github.com/Smerity/e750f0ef0ab9aa366558#file-bbc-pretty-wat
+
 ## Prerequisites
 - A Google account (to create ressources in GCP)
 - A Prefect account (with access to the Prefect Cloud)
@@ -19,12 +29,12 @@
 │   ├── 00_raw       --> Immutable, raw data
 │   ├── 01_staged    --> Processed data
 │   └── 02_final     --> Data which can be served (ML, Analytics)
+├── infrastructure   --> Docker images to run infrastructure
+│   ├── compute
+│   └── storage
 ├── deployments      --> Prefect deployment .yaml files
 ├── docs
 │   └── images
-├── infrastructure   --> Terraform infra configs and scripts
-│   ├── compute
-│   └── storage
 ├── make             --> Makefiles for setting up ressources and environment
 │   └── prefect
 ├── notebooks        --> Jupyter or Observeable (JS) Notebooks
@@ -47,9 +57,11 @@ pre-commit install
 *necessary everytime you start working on the project*
 1. `make dev-init` to setup development environment
 
-### GCP Setup
+### Environment Variables
 1. Define values in base.env (not part of this repository)
-2. Run `make setup-gcp` to setup up the Google Cloud Project
+
+### GCP Setup
+1. Run `make setup-gcp` to setup up the Google Cloud Project
 
 If this doesn't work, run the commands from `00_00_setup_gcp.mk` command by command in the following order:
 - `make create-gcp-project`
@@ -70,19 +82,34 @@ Create Repository in Google Artifact Registry where you can deploy Docker images
 
 ### Setup Storage
 1. Setup the storage infrastructure by running
-`cd/.infrastructure/storage`
-2. `terraform init` to init Terraform
-3. `terraform plan` to see planned changes
-4. `terraform apply` to setup infrastructure as defined in `main.tf` files
 
-### Deploy Flow
+### Deploy 
+- Add description here
 
-## About the Common Crawl Project
+## Next Steps
 
-Important File Types
-- WAT
-- WART
-- WET
+### Pyspark and Prefect
+Probably not compatible with Data Proc
+https://medium.com/globalwork-data-driven-world/data-orchestration-using-prefect-and-pyspark-7321559864f7
 
-### WAT Files
-https://gist.github.com/Smerity/e750f0ef0ab9aa366558#file-bbc-pretty-wat
+### Infrastructure Setup (Data Proc)
+Export pyproject.toml as requirements.txt in 02_setup_infra.mk
+Create a Docker image with all dependencies and install requirements.txt (which will be used by Data Proc)
+
+### Pipeline (Please stick to it)
+
+Step 1
+- Option 1: Store JSONL files in Object Storage (or directly as Parquet file)
+- Option 2: Combine JSON files in a Parquet file and store in Object Storage
+
+Step 2 (If Option 2 from Step 1 is choosen)
+- Sync Parquet File to Bigquery (or maybe skip this step?)
+
+Step 3
+- Option 1: Load Parquet File and do Data Processing using Data Proc (https://cloud.google.com/dataproc/docs/tutorials/gcs-connector-spark-tutorial#python)
+- Option 2: Load Bigquery Table and do Data Processing using Data Proc (https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example#pyspark)
+
+In General
+- Submit Job to Data Proc using [Python API](https://cloud.google.com/dataproc/docs/tutorials/python-library-example#submit_a_job) 
+
+https://docs.docker.com/desktop/install/ubuntu/#install-docker-desktop
