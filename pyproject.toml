@@ -15,6 +15,8 @@ warcio = "^1.7.4"
 asyncio = "^3.4.3"
 fastparquet = "^2023.7.0"
 prefect-gcp = {extras = ["cloud-storage"], version = "^0.4.5"}
+pyspark = "^3.4.1"
+ipykernel = "^6.25.1"
 
 
 [tool.poetry.group.dev.dependencies]
