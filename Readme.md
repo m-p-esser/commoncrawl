@@ -97,6 +97,9 @@ https://medium.com/globalwork-data-driven-world/data-orchestration-using-prefect
 - Create a Docker image with all dependencies and install requirements.txt (which will be used by Data Proc)
 - Deploy Data Proc Cluster using Make target
 
+Consider https://cloud.google.com/dataproc/docs/tutorials/python-configuration
+Can poetry create an environment.yaml as well?
+
 ### Pipeline (Please stick to it)
 
 Step 1
