@@ -45,7 +45,9 @@ enable-gcp-services: ## Enable GCP services
 		run.googleapis.com \
 		appenginereporting.googleapis.com \
 		compute.googleapis.com \
-		cloudresourcemanager.googleapis.com
+		cloudresourcemanager.googleapis.com \
+		dataproc.googleapis.com \
+		storage-component.googleapis.com
 
 .PHONY: bind-iam-policies-to-deployment-service-account
 bind-iam-policies-to-deployment-service-account: ## Bind IAM Policies to Service Account
@@ -58,6 +60,7 @@ bind-iam-policies-to-deployment-service-account: ## Bind IAM Policies to Service
 	gcloud projects add-iam-policy-binding $(GCP_PROJECT_ID) --member=serviceAccount:$(GCP_DEPLOYMENT_SERVICE_ACCOUNT)@$(GCP_PROJECT_ID).iam.gserviceaccount.com --role="roles/appengine.appAdmin"
 	gcloud projects add-iam-policy-binding $(GCP_PROJECT_ID) --member=serviceAccount:$(GCP_DEPLOYMENT_SERVICE_ACCOUNT)@$(GCP_PROJECT_ID).iam.gserviceaccount.com --role="roles/run.admin"
 	gcloud projects add-iam-policy-binding $(GCP_PROJECT_ID) --member=serviceAccount:$(GCP_DEPLOYMENT_SERVICE_ACCOUNT)@$(GCP_PROJECT_ID).iam.gserviceaccount.com --role="roles/compute.admin"
+	gcloud projects add-iam-policy-binding $(GCP_PROJECT_ID) --member=serviceAccount:$(GCP_DEPLOYMENT_SERVICE_ACCOUNT)@$(GCP_PROJECT_ID).iam.gserviceaccount.com --role="roles/dataproc.worker"
 # Grant your Google Account a role that lets you use the service account's roles and attach the service account to other resources:
 	gcloud iam service-accounts add-iam-policy-binding $(GCP_DEPLOYMENT_SERVICE_ACCOUNT)@$(GCP_PROJECT_ID).iam.gserviceaccount.com --member="user:emarcphilipp@gmail.com" --role=roles/iam.serviceAccountUser
 
