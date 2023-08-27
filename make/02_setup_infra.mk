@@ -1,24 +1,19 @@
 ##@ [Infrastructure: Setup]
 
-.PHONY: export-requirements-txt 
-export-requirements-txt: ### Create requirementxt.txt from pyproject.toml
+.PHONY: create-environment-yaml
+create-environment-yaml: ### Create environment.yaml using pyproject.toml as base
 	poetry export -o requirements.txt --without-hashes --without-urls --without=dev,test
-
+	python3 src/scripts/requirements_to_conda_env.py
+	gsutil rm -r gs://${SPARK_STAGING_BUCKET_NAME}
+	gsutil mb -c standard -l ${GCP_DEFAULT_REGION} gs://${SPARK_STAGING_BUCKET_NAME}
+	gsutil cp environment.yaml gs://${SPARK_STAGING_BUCKET_NAME}/environment.yaml
 
 .PHONY: create-spark-cluster 
 create-spark-cluster: ## Create GCP Dataproc (Spark) Cluster
-	gsutil rm -r gs://${SPARK_STAGING_BUCKET_NAME}
-	gsutil mb -c standard -l northamerica-northeast2 gs://${SPARK_STAGING_BUCKET_NAME} 
 	gcloud dataproc clusters create ${SPARK_CLUSTER_NAME} \
 	--region=northamerica-northeast2 \
 	--service-account=$(GCP_DEPLOYMENT_SERVICE_ACCOUNT)@$(GCP_PROJECT_ID).iam.gserviceaccount.com \
-	--image-version=2.1-ubuntu20 \
-	--master-machine-type=n1-standard-2 \
-	--master-boot-disk-size 200 \
-	--worker-machine-type=n1-standard-2 \
-	--worker-boot-disk-size 200 \
-	--bucket=${SPARK_STAGING_BUCKET_NAME} \
-	--optional-components=JUPYTER \
-	--enable-component-gateway \
-	--metadata 'PIP_PACKAGES=google-cloud-storage'
-	--initialization-actions gs://goog-dataproc-initialization-actions-northamerica-northeast2/python/pip-install.sh
+	--image-version=2.0 \
+	--bucket=${SPARK_STAGING_BUCKET_NAME}
+
+# --properties='dataproc:conda.env.config.uri=gs://${SPARK_CLUSTER_NAME}/environment.yaml'
