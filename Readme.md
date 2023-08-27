@@ -83,25 +83,3 @@ Create Repository in Google Artifact Registry where you can deploy Docker images
 ### Deploy 
 - Add description here
 
-## Next Steps
-
-### Pyspark and Prefect
-Probably not compatible with Data Proc
-https://medium.com/globalwork-data-driven-world/data-orchestration-using-prefect-and-pyspark-7321559864f7
-
-### Pipeline (Please stick to it)
-
-- Load Data into Spark Dataframe
-- Store Spark Dataframe as Parquet File in Object Storage
-- Connect data to Neo4J
-
-(Submit all Jobs to Data Proc)
-
-#### Other ideas
-- Option 1: Load Parquet File and do Data Processing using Data Proc (https://cloud.google.com/dataproc/docs/tutorials/gcs-connector-spark-tutorial#python)
-- Option 2: Load Bigquery Table and do Data Processing using Data Proc (https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example#pyspark)
-
-In General
-- Submit Job to Data Proc using [Python API](https://cloud.google.com/dataproc/docs/tutorials/python-library-example#submit_a_job) 
-
-https://docs.docker.com/desktop/install/ubuntu/#install-docker-desktop
