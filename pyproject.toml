@@ -17,6 +17,7 @@ fastparquet = "^2023.7.0"
 prefect-gcp = {extras = ["cloud-storage"], version = "^0.4.5"}
 pyspark = "^3.4.1"
 ipykernel = "^6.25.1"
+google-cloud-dataproc = "^5.4.3"
 
 
 [tool.poetry.group.dev.dependencies]
