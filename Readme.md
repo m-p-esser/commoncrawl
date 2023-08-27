@@ -29,9 +29,6 @@ https://gist.github.com/Smerity/e750f0ef0ab9aa366558#file-bbc-pretty-wat
 │   ├── 00_raw       --> Immutable, raw data
 │   ├── 01_staged    --> Processed data
 │   └── 02_final     --> Data which can be served (ML, Analytics)
-├── infrastructure   --> Docker images to run infrastructure
-│   ├── compute
-│   └── storage
 ├── deployments      --> Prefect deployment .yaml files
 ├── docs
 │   └── images
@@ -92,24 +89,15 @@ Create Repository in Google Artifact Registry where you can deploy Docker images
 Probably not compatible with Data Proc
 https://medium.com/globalwork-data-driven-world/data-orchestration-using-prefect-and-pyspark-7321559864f7
 
-### Infrastructure Setup (Data Proc)
-- Export pyproject.toml as requirements.txt in 02_setup_infra.mk
-- Create a Docker image with all dependencies and install requirements.txt (which will be used by Data Proc)
-- Deploy Data Proc Cluster using Make target
-
-Consider https://cloud.google.com/dataproc/docs/tutorials/python-configuration
-Can poetry create an environment.yaml as well?
-
 ### Pipeline (Please stick to it)
 
-Step 1
-- Option 1: Store JSONL files in Object Storage (or directly as Parquet file)
-- Option 2: Combine JSON files in a Parquet file and store in Object Storage
+- Load Data into Spark Dataframe
+- Store Spark Dataframe as Parquet File in Object Storage
+- Connect data to Neo4J
 
-Step 2 (If Option 2 from Step 1 is choosen)
-- Sync Parquet File to Bigquery (or maybe skip this step?)
+(Submit all Jobs to Data Proc)
 
-Step 3
+#### Other ideas
 - Option 1: Load Parquet File and do Data Processing using Data Proc (https://cloud.google.com/dataproc/docs/tutorials/gcs-connector-spark-tutorial#python)
 - Option 2: Load Bigquery Table and do Data Processing using Data Proc (https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example#pyspark)
 
